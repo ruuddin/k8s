@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: consul
+  namespace: assignment
+  labels:
+    name: consul
+    namespace: assignment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: consul
+      namespace: assignment
+  template:
+    metadata:
+      labels:
+        name: consul
+        namespace: assignment
+    spec:
+      containers:
+        - name: consul
+          image: consul:0.7.2
+          imagePullPolicy: IfNotPresent

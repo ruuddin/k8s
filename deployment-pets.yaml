@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: pets
+  namespace: assignment
+  labels:
+    name: pets
+    namespace: assignment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: pets
+      namespace: assignment
+  template:
+    metadata:
+      labels:
+        name: pets
+        namespace: assignment
+    spec:
+      containers:
+        - name: docker-pets-app
+          image: chrch/docker-pets:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+              name: jvm-debug
+              protocol: TCP
+          env:
+            - name: DB
+              value: service-consul

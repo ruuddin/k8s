@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-pets
+  labels:
+    name: ingress-pets
+    namespace: assignment
+spec:
+  rules:
+    - host:
+      http:
+        paths:
+          - path: /assignment/pets/
+            backend:
+              serviceName: service-pets
+              servicePort: 5000
