@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bdgreeter
+  namespace: riaz
+  labels:
+    app: bdgreeter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bdgreeter
+  template:
+    metadata:
+      labels:
+        app: bdgreeter
+    spec:
+      containers:
+        - name: app
+          image: magalixcorp/birthdaygreeter
+        - name: envoy
+          image: envoyproxy/envoy-alpine
+          args:
+            - "-c"
+            - "/envoy-config/envoy.yaml"
+          volumeMounts:
+            - name: envoy-config
+              mountPath: /envoy-config
+      volumes:
+        - name: envoy-config
+          configMap:
+            name: envoyconfig
