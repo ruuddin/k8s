@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-app-deployment
+  labels:
+    app: spring-boot-app
+spec:
+  selector:
+    matchLabels:
+      app: spring-boot-app
+  template:
+    metadata:
+      labels:
+        app: spring-boot-app
+    spec:
+      containers:
+        - image: docker.io/ruuddin/spring-boot-app:0.1
+          name: spring-boot-app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9999
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-app-svc
+spec:
+  ports:
+    - name: spring-boot-app
+      targetPort: 9999
+      port: 8080
+      nodePort: 30205
+      protocol: TCP
+  selector:
+    app: spring-boot-app
+  type: NodePort
